@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Cassandra;
 
 namespace DataPopulator
 {
@@ -16,7 +17,7 @@ namespace DataPopulator
         void Run()
         {
             List<Person> customerList = GeneratePeopleData(10000);
-            printList(customerList);
+            insertIntoDb(customerList);
         }
         List<Person> GeneratePeopleData(int numberOfRows)
         {
@@ -38,6 +39,20 @@ namespace DataPopulator
                 Console.WriteLine("Age: " + person.Age + /*" Sex: " + person.Sex + */" WorkStatus: " + person.WorkStatus +
                 " Annual Income: " + person.AnnualIncome + " Destination: " + person.Destination);
             }
+            Console.ReadKey(true);
+        }
+        void insertIntoDb(List<Person> peopleList)
+        {
+            Cluster cluster = Cluster.Builder().AddContactPoint("cassandra.yikes.dk").Build();
+            ISession session = cluster.Connect("Exam");
+            foreach(Person person in peopleList)
+            {
+                var ps = session.Prepare("insert into  \"People\" (id, \"Age\", \"AnnualIncome\", \"Destination\", \"WorkStatus\") values (uuid(), ?, ?, ?, ?)");
+                var statement = ps.Bind(person.Age, person.AnnualIncome, person.Destination, person.WorkStatus);
+                
+                //session.Execute(statement);
+            }
+            Console.WriteLine("Done inserting!");
             Console.ReadKey(true);
         }
     }

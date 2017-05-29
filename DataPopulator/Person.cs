@@ -14,7 +14,7 @@ namespace DataPopulator
         public int WorkStatus { get; set; } // 1= Student, 2 = Employed, 3=unemployed, 4= Retired
         //public int Sex { get; set; } // 1= male, 2= female
         public int Destination { get; set; } // 1 = cheapest and youngest, 10 oldest and most expensive
-
+        // Prag, Budapest, Berlin,Stockholm ,Oslo , London, New York, Grønland, Bora Bora , Dubai,
         public Person()
         {
             
@@ -94,6 +94,35 @@ namespace DataPopulator
             else if(this.WorkStatus == 4) // retired
                 destination += 1;
             return destination;
+        }
+        string translateDestination(int number)
+        {
+            // Prag, Budapest, Berlin,Stockholm ,Oslo , London, New York, Grønland, Bora Bora , Dubai,
+            switch (number)
+            {
+                case 1:
+                    return "Prag";
+                case 2:
+                    return "Budapest";
+                case 3:
+                    return "Berlin";
+                case 4:
+                    return "Stockholm";
+                case 5:
+                    return "Oslo";
+                case 6:
+                    return "London";
+                case 7:
+                    return "New York";
+                case 8:
+                    return "Greenland";
+                case 9:
+                    return "Bora Bora";
+                case 10:
+                    return "Dubai";
+                default:
+                    return "Invalid Destination";
+            }
         }
        
     }
