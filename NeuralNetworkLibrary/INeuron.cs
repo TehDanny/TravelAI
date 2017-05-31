@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NeuralNetworkLibrary
 {
-    interface INeuron : INeuronSignal, INeuronReceptor
+    public interface INeuron : INeuronSignal, INeuronReceptor
     {
         void Pulse(INeuralLayer layer);
         void ApplyLearning(INeuralLayer layer);

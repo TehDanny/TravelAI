@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NeuralNetworkLibrary
 {
-    interface INeuralNet
+    public interface INeuralNet
     {
         INeuralLayer HiddenLayer { get; }
         INeuralLayer OutputLayer { get; }

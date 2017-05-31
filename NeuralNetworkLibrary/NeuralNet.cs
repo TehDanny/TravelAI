@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NeuralNetworkLibrary
 {
-    class NeuralNet : INeuralNet
+    public class NeuralNet : INeuralNet
     {
         INeuralLayer m_hiddenLayer;
         INeuralLayer m_inputLayer;

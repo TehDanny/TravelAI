@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NeuralNetworkLibrary
 {
-    interface INeuronSignal
+    public interface INeuronSignal
     {
         double Output { get; set; }
     }
