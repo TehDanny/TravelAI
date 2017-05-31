@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataPopulator", "DataPopula
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeuralNetworkLibrary", "NeuralNetworkLibrary\NeuralNetworkLibrary.csproj", "{062401E2-A888-430C-8062-242B89474AD2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelAI", "TravelAI\TravelAI.csproj", "{77A1C74C-9670-4F58-9D6D-75744A46F5FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{062401E2-A888-430C-8062-242B89474AD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{062401E2-A888-430C-8062-242B89474AD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{062401E2-A888-430C-8062-242B89474AD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77A1C74C-9670-4F58-9D6D-75744A46F5FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77A1C74C-9670-4F58-9D6D-75744A46F5FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77A1C74C-9670-4F58-9D6D-75744A46F5FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77A1C74C-9670-4F58-9D6D-75744A46F5FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
