@@ -48,6 +48,42 @@ namespace TravelAI
                 default:
                     throw new Exception();
             }
+
+            switch (customer.Destination)
+            {
+                case 1:
+                    DestinationPrag = 1;
+                    break;
+                case 2:
+                    DestinationBudapest = 1;
+                    break;
+                case 3:
+                    DestinationBerlin = 1;
+                    break;
+                case 4:
+                    DestinationStockholm = 1;
+                    break;
+                case 5:
+                    DestinationOslo = 1;
+                    break;
+                case 6:
+                    DestinationLondon = 1;
+                    break;
+                case 7:
+                    DestinationNewYork = 1;
+                    break;
+                case 8:
+                    DestinationGreenland = 1;
+                    break;
+                case 9:
+                    DestinationBoraBora = 1;
+                    break;
+                case 10:
+                    DestinationDubai = 1;
+                    break;
+                default:
+                    throw new Exception();
+            }
         }
 
         private double NormalizeAge(int age) // 16-80 --> 0.0-1.0
