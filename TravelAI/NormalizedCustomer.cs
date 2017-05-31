@@ -14,5 +14,15 @@ namespace TravelAI
         public double WorkStatusUnemployed { get; set; }
         public double WorkStatusEmployed { get; set; }
         public double WorkStatusRetired { get; set; }
+
+        public NormalizedCustomer(double age, double annualIncome, double workStatusStudent, double workStatusUnemployed, double workStatusEmployed, double workStatusRetired)
+        {
+            Age = age;
+            AnnualIncome = annualIncome;
+            WorkStatusStudent = workStatusStudent;
+            WorkStatusUnemployed = workStatusUnemployed;
+            WorkStatusEmployed = workStatusEmployed;
+            WorkStatusRetired = workStatusRetired;
+        }
     }
 }
