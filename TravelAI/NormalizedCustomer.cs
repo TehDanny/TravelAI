@@ -30,62 +30,68 @@ namespace TravelAI
         {
             Age = NormalizeAge(customer.Age);
             AnnualIncome = NormalizeAnnualIncome(customer.AnnualIncome);
-
-            switch (customer.WorkStatus)
+            NormalizeWorkStatus(customer.WorkStatus);
+            NormalizeDestination(customer.Destination);
+            
+        }
+        void NormalizeWorkStatus(int workStatus)
+        {
+            switch (workStatus)
             {
                 case 1:
-                    WorkStatusStudent = 1;
+                    this.WorkStatusStudent = 1;
                     break;
                 case 2:
-                    WorkStatusEmployed = 1;
+                    this.WorkStatusEmployed = 1;
                     break;
                 case 3:
-                    WorkStatusUnemployed = 1;
+                    this.WorkStatusUnemployed = 1;
                     break;
                 case 4:
-                    WorkStatusRetired = 1;
-                    break;
-                default:
-                    throw new Exception();
-            }
-
-            switch (customer.Destination)
-            {
-                case 1:
-                    DestinationPrag = 1;
-                    break;
-                case 2:
-                    DestinationBudapest = 1;
-                    break;
-                case 3:
-                    DestinationBerlin = 1;
-                    break;
-                case 4:
-                    DestinationStockholm = 1;
-                    break;
-                case 5:
-                    DestinationOslo = 1;
-                    break;
-                case 6:
-                    DestinationLondon = 1;
-                    break;
-                case 7:
-                    DestinationNewYork = 1;
-                    break;
-                case 8:
-                    DestinationGreenland = 1;
-                    break;
-                case 9:
-                    DestinationBoraBora = 1;
-                    break;
-                case 10:
-                    DestinationDubai = 1;
+                    this.WorkStatusRetired = 1;
                     break;
                 default:
                     throw new Exception();
             }
         }
-
+        void NormalizeDestination(int destination)
+        {
+            switch (destination)
+            {
+                case 1:
+                    this.DestinationPrag = 1;
+                    break;
+                case 2:
+                    this.DestinationBudapest = 1;
+                    break;
+                case 3:
+                    this.DestinationBerlin = 1;
+                    break;
+                case 4:
+                    this.DestinationStockholm = 1;
+                    break;
+                case 5:
+                    this.DestinationOslo = 1;
+                    break;
+                case 6:
+                    this.DestinationLondon = 1;
+                    break;
+                case 7:
+                    this.DestinationNewYork = 1;
+                    break;
+                case 8:
+                    this.DestinationGreenland = 1;
+                    break;
+                case 9:
+                    this.DestinationBoraBora = 1;
+                    break;
+                case 10:
+                    this.DestinationDubai = 1;
+                    break;
+                default:
+                    throw new Exception();
+            }
+        }
         private double NormalizeAge(int age) // 16-80 --> 0.0-1.0
         {
             return NormalizeValue(16, 80, age);
