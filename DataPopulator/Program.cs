@@ -17,7 +17,8 @@ namespace DataPopulator
         void Run()
         {
             List<Person> customerList = GeneratePeopleData(10000);
-            insertIntoDb(customerList);
+            //insertIntoDb(customerList);
+            printList(customerList);
         }
         List<Person> GeneratePeopleData(int numberOfRows)
         {
