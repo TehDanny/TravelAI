@@ -40,7 +40,7 @@ namespace TravelAI
                 {
                     // Prag, Budapest, Berlin,Stockholm ,Oslo , London, New York, Grønland, Bora Bora , Dubai,
                     i++;
-                    NormalizedCustomer nc= dataNormalizer.GetNormalizedCustomer(customer);
+                    NormalizedCustomer nc = new NormalizedCustomer(customer);
                    
                     input[i] = new double[] { nc.Age, nc.AnnualIncome, nc.WorkStatusStudent, nc.WorkStatusEmployed, nc.WorkStatusUnemployed, nc.WorkStatusRetired };
                     output[i] = new double[] {nc.DestinationPrag, nc.DestinationBudapest, nc.DestinationBerlin, nc.DestinationStockholm, nc.DestinationOslo, nc.DestinationLondon,

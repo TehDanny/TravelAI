@@ -26,14 +26,43 @@ namespace TravelAI
         public double DestinationBoraBora { get; set; }
         public double DestinationDubai { get; set; }
 
-        public NormalizedCustomer(double age, double annualIncome, double workStatusStudent, double workStatusUnemployed, double workStatusEmployed, double workStatusRetired)
+        public NormalizedCustomer(Customer customer)
         {
-            Age = age;
-            AnnualIncome = annualIncome;
-            WorkStatusStudent = workStatusStudent;
-            WorkStatusUnemployed = workStatusUnemployed;
-            WorkStatusEmployed = workStatusEmployed;
-            WorkStatusRetired = workStatusRetired;
+            Age = NormalizeAge(customer.Age);
+            AnnualIncome = NormalizeAnnualIncome(customer.AnnualIncome);
+
+            switch (customer.WorkStatus)
+            {
+                case 1:
+                    WorkStatusStudent = 1;
+                    break;
+                case 2:
+                    WorkStatusEmployed = 1;
+                    break;
+                case 3:
+                    WorkStatusUnemployed = 1;
+                    break;
+                case 4:
+                    WorkStatusRetired = 1;
+                    break;
+                default:
+                    throw new Exception();
+            }
+        }
+
+        private double NormalizeAge(int age) // 16-80 --> 0.0-1.0
+        {
+            return NormalizeValue(16, 80, age);
+        }
+
+        private double NormalizeAnnualIncome(int annualIncome) // 0-500000 --> 0.0-1.0
+        {
+            return NormalizeValue(0, 500000, annualIncome);
+        }
+
+        private double NormalizeValue(int lowestValue, int highestValue, int value)
+        {
+            return (value - lowestValue) / (highestValue - lowestValue);
         }
     }
 }
