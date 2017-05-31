@@ -25,17 +25,21 @@ namespace TravelAI
 
             CustomerData cd = new CustomerData();
             List<Customer> customerList = cd.GetCustomers(100);
+            
             int customerCount = customerList.Count();
             if(customerList != null || customerList.Count >= 1)
             {
-               
-                foreach (Customer cust in customerList)
+                DataNormalizer dataNormalizer = new DataNormalizer();
+                int i = 0;
+                foreach (Customer customer in customerList)
                 {
-                    double[][] input = new Double[customerCount][];
-                    for(int i=1; i<= customerCount; i++)
-                    {
-                        
-                    }
+                    i++;
+                    NormalizedCustomer nc= dataNormalizer.GetNormalizedCustomer(customer);
+                    double[][] input = new double[customerCount][];
+                    double[] output = new double[customerCount];
+                    input[i] = new double[] { nc.Age, nc.AnnualIncome, nc.WorkStatusStudent, nc.WorkStatusEmployed, nc.WorkStatusUnemployed, nc.WorkStatusRetired };
+
+                    output[i] = new double[customer.Destination];
                 }
                 do
                 {
