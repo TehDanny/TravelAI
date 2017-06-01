@@ -17,6 +17,7 @@ namespace TravelAI
         void Run()
         {
             NeuralNet net = new NeuralNet();
+            
             int randomSeed = 1;
             int numberOfInputs = 6;
             int numberOfOutputs = 10;
@@ -28,66 +29,48 @@ namespace TravelAI
 
             CustomerData cd = new CustomerData();
             List<Customer> customerList = cd.GetCustomers(100);
-            
-            int customerCount = customerList.Count();
-            if(customerList != null || customerList.Count >= 1)
-            {
-                double[][] input = new double[customerCount][];
-                double[][] output = new double[customerCount][];
-                DataNormalizer dataNormalizer = new DataNormalizer();
-                int i = 0;
-                foreach (Customer customer in customerList)
-                {
-                    // Prag, Budapest, Berlin,Stockholm ,Oslo , London, New York, Grønland, Bora Bora , Dubai,
-                    i++;
-                    NormalizedCustomer nc = new NormalizedCustomer(customer);
-                   
-                    input[i] = new double[] { nc.Age, nc.AnnualIncome, nc.WorkStatusStudent, nc.WorkStatusEmployed, nc.WorkStatusUnemployed, nc.WorkStatusRetired };
-                    output[i] = new double[] {nc.DestinationPrag, nc.DestinationBudapest, nc.DestinationBerlin, nc.DestinationStockholm, nc.DestinationOslo, nc.DestinationLondon,
-                        nc.DestinationNewYork, nc.DestinationGreenland, nc.DestinationBoraBora, nc.DestinationDubai};
-                }
-                double ll, lh, hl, hh;
-                int count;
+            List<Customer> trainCustomerList = GetCustomerLists(customerList)[0];
+            List<Customer> testCustomerList = GetCustomerLists(customerList)[1];
 
-                count = 0;
+            int customerCount = customerList.Count();
+            if(customerList != null && customerList.Count >= 1)
+            {
+                double[][] trainInput = GetInputArray(trainCustomerList);
+                double[][] trainOutput = GetOutputArray(trainCustomerList);
+                double[][] testInput = GetInputArray(testCustomerList);
+                double[][] testOutput = GetOutputArray(testCustomerList);
+
+                double ll, lh, hl, hh;
+                int iterations;
+                int testInputCount = testInput.Count();
+                double[] testOutputResults;
+                iterations = 0;
                 do
                 {
-                    count++;
-                    net.Train(input, output);
+                    testOutputResults = new double[testInputCount];
+                    iterations++;
+                    for (int i = 0; i < 20; i++)
+                    {
+                        net.Train(trainInput, trainOutput);
+                    }
 
+                    // først træner netværket og så sætter den prædefinerede værdier igennem for at se om resultatet passer og hvis ikke gør den det igen
                     net.ApplyLearning();
-
-                    net.PerceptionLayer[0].Output = low;
-                    net.PerceptionLayer[1].Output = low;
-
-                    net.Pulse();
-
-                    ll = net.OutputLayer[0].Output;
-
-                    net.PerceptionLayer[0].Output = high;
-                    net.PerceptionLayer[1].Output = low;
-
-                    net.Pulse();
-
-                    hl = net.OutputLayer[0].Output;
-
-                    net.PerceptionLayer[0].Output = low;
-                    net.PerceptionLayer[1].Output = high;
-
-                    net.Pulse();
-
-                    lh = net.OutputLayer[0].Output;
-
-                    net.PerceptionLayer[0].Output = high;
-                    net.PerceptionLayer[1].Output = high;
-
-                    net.Pulse();
-
-                    hh = net.OutputLayer[0].Output;
+                    
+                    for(int i = 0; i<testInput.Count(); i++)
+                    {
+                        for(int j = 0; j < numberOfInputs; j++)
+                        {
+                            net.PerceptionLayer[j].Output = testOutput[i][j];
+                        }
+                        net.Pulse();
+                        testOutputResults[i] = net.OutputLayer[0].Output;
+                    }
+                    Console.WriteLine(iterations.ToString());
                 }
-                while (hh > mid || lh < mid || hl < mid || ll > mid);
+                while (TestResults(testOutputResults)); //mens outputtene er over/under en hvis værdi
 
-                Console.WriteLine(count.ToString() + " iterations required for training");
+                Console.WriteLine(iterations.ToString() + " iterations required for training");
             }
 
             //foreach(Customer c in customerList)
@@ -98,5 +81,74 @@ namespace TravelAI
             Console.ReadKey(true);
             
         }
+        bool TestResults(double[] testOutputResults)
+        {
+            for(int i = 0; i < testOutputResults.Count(); i++)
+            {
+                
+                if (testOutputResults[i] > 0.5)
+                {
+                    
+                    return false;
+                }
+                    
+            }
+            Console.WriteLine(testOutputResults[testOutputResults.Count()-2].ToString());
+            return true;
+        }
+        List<List<Customer>> GetCustomerLists(List<Customer> customerList)
+        {
+            List<List<Customer>> lists = new List<List<Customer>>();
+            List<Customer> trainingList = new List<Customer>();
+            List<Customer> testingList = new List<Customer>();
+            int count = customerList.Count();
+            int trainLimit = count * 90 / 100;
+            
+            int i = 0;
+            foreach(Customer customer in customerList)
+            {
+                i++;
+                if (i <= trainLimit)
+                {
+                    trainingList.Add(customer);
+                }
+                else
+                {
+                    testingList.Add(customer);
+                }
+            }
+            lists.Add(trainingList);
+            lists.Add(testingList);
+            return lists;
+        }
+        double[][] GetOutputArray(List<Customer> customerList)
+        {
+
+            double[][] Output = new double[customerList.Count()][];
+            int i = 0;
+            foreach(Customer customer in customerList)
+            {
+                
+                NormalizedCustomer nc = new NormalizedCustomer(customer);
+                Output[i] = new double[] {nc.DestinationPrag, nc.DestinationBudapest, nc.DestinationBerlin, nc.DestinationStockholm, nc.DestinationOslo, nc.DestinationLondon,
+                        nc.DestinationNewYork, nc.DestinationGreenland, nc.DestinationBoraBora, nc.DestinationDubai};
+                i++;
+            }
+            return Output;
+        }
+        double[][] GetInputArray(List<Customer> customerList)
+        {
+            double[][] Input = new double[customerList.Count()][];
+            int i = 0;
+            foreach(Customer customer in customerList)
+            {
+                
+                NormalizedCustomer nc = new NormalizedCustomer(customer);
+                Input[i] = new double[] { nc.Age, nc.AnnualIncome, nc.WorkStatusStudent, nc.WorkStatusEmployed, nc.WorkStatusUnemployed, nc.WorkStatusRetired };
+                i++;
+            }
+            return Input;
+        }
+        
     }
 }

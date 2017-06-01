@@ -9,7 +9,8 @@ namespace TravelAI
 {
     class CustomerData
     {
-       public List<Customer> GetCustomers(int amountOfCustomers)
+        
+        public List<Customer> GetCustomers(int amountOfCustomers)
         {
             List<Customer> customerList = new List<Customer>();
             Cluster cluster = Cluster.Builder().AddContactPoint("cassandra.yikes.dk").Build();
@@ -27,6 +28,7 @@ namespace TravelAI
                 
            
             return customerList;
-        } 
+        }
+
     }
 }

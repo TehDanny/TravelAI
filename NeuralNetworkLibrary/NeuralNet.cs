@@ -14,7 +14,7 @@ namespace NeuralNetworkLibrary
         double m_learningRate;
         public NeuralNet()
         {
-            m_learningRate = 0.1;
+            m_learningRate = 0.9;
         }
         public INeuralLayer HiddenLayer
         {
@@ -109,6 +109,7 @@ namespace NeuralNetworkLibrary
                 }
 
                 node.Error = error;
+                
             }
 
             // adjust output layer weight change
