@@ -19,7 +19,7 @@ namespace TravelAI
         {
             NeuralNet net = new NeuralNet();
             
-            int randomSeed = 1;
+            int randomSeed = 3;
             int numberOfInputNodes = 6;
             int numberOfOutputNodes = 10;
             int numberOfHiddenNeurons = 12;
@@ -48,12 +48,9 @@ namespace TravelAI
                 {
                     actualTestDataResults = new double[testDataOutputCount][];
                     iterations++;
-                    //for (int i = 0; i < 10; i++)
-                    //{
-                        net.Train(trainDataInputArray, trainDataOutputArray);
-                    //}
+                    net.Train(trainDataInputArray, trainDataOutputArray);
 
-                    // først træner netværket og så sætter den prædefinerede værdier igennem for at se om resultatet passer og hvis ikke gør den det igen
+                    // først træner netværket og så tester den de prædefinerede værdier igennem for at se om resultatet passer og hvis ikke gør den det igen
                     net.ApplyLearning();
                     
                     for(int i = 0; i<testDataInputArray.Count(); i++)
@@ -70,43 +67,43 @@ namespace TravelAI
                             actualTestDataResults[i][k] = net.OutputLayer[k].Output;
                             expectedTestDataResults[i][k] = testDataOutputArray[i][k];
                         }
-                        
                     }
                     Console.WriteLine(iterations.ToString());
                 }
                 while (keepTesting(actualTestDataResults, numberOfOutputNodes)); //mens outputtene er over/under en hvis værdi
                 double[] accuracyResults = GetAccuracy(testDataOutputArray, actualTestDataResults, numberOfOutputNodes);
-                Console.WriteLine("Right Results: " + accuracyResults[0] + " Wrong Results " + accuracyResults[1]);
+                double accuracyPercentage = (accuracyResults[0] / actualTestDataResults.Count())*100;
+                Console.WriteLine("Right Results: " + accuracyResults[0] + " Wrong Results " + accuracyResults[1] + " Accuracy: " + accuracyPercentage + "%");
                 Console.WriteLine(iterations.ToString() + " iterations required for training");
             }
             Console.ReadKey(true);
-            
         }
         
         bool keepTesting(double[][] actualTestDataResults, int numberOfOutputNodes)
         {
-            int correctResults = 0;
-            int wrongResults = 0;
+            int correctResult = 0;
+            int incorrectResult = 0;
             int testOutputResultsCount = actualTestDataResults.Count();
             for (int i = 0; i < testOutputResultsCount; i++)
             {
+                int onNode = 0;
+                int offNode = 0;
                 //Console.WriteLine(testOutputResults[i].ToString());
                 for (int j = 0; j < numberOfOutputNodes; j++)
                 {
                     if (actualTestDataResults[i][j] > 0.5)
-                    {
-                        correctResults++;
-                    }
+                        onNode++;
                     else
-                        wrongResults++;
+                        offNode++;
                 }
-                
+                if (onNode == 1 && offNode == 9)
+                    correctResult++;
+                else
+                    incorrectResult++;
             }
-            Console.WriteLine("Correct: " + correctResults.ToString() + " Wrong: " + wrongResults.ToString());
-            if (correctResults > testOutputResultsCount * 0.9)
-            {
+            Console.WriteLine("Correct: " + correctResult.ToString() + " Wrong: " + incorrectResult.ToString());
+            if (correctResult > testOutputResultsCount * 0.9)
                 return false;
-            }
             else
                 return true;
         }
@@ -115,26 +112,20 @@ namespace TravelAI
             int countRight = 0;
             int countWrong = 0;
             int rowCount = expectedResults.Count();
-            int outputNodeCount = expectedResults[1].Count();
             for (int i = 0; i < rowCount ; i++)
             {
                 for (int j = 0; j < numberOfOutputNodes; j++)
                 {
-                    if (expectedResults[i][j] > 0.5)
-                    {
-                        expectedResults[i][j] = 0.9;
-                    }
-                    if (expectedResults[i][j] == actualResults[i][j])
-                    {
-                        countRight++;
-                    }
+                    if (actualResults[i][j] > 0.5)
+                        actualResults[i][j] = 0.9;
                     else
-                    {
-                        countWrong++;
-                    }
+                        actualResults[i][j] = 0.1;
+
                 }
-               
-                    
+                if (expectedResults[i].SequenceEqual(actualResults[i]))
+                    countRight++;
+                else
+                    countWrong++;
             }
             return new double[] { countRight, countWrong};
         }
@@ -151,13 +142,9 @@ namespace TravelAI
             {
                 i++;
                 if (i <= trainLimit)
-                {
                     trainingList.Add(customer);
-                }
                 else
-                {
                     testingList.Add(customer);
-                }
             }
             lists.Add(trainingList);
             lists.Add(testingList);
@@ -165,12 +152,10 @@ namespace TravelAI
         }
         double[][] GetOutputArray(List<Customer> customerList)
         {
-
             double[][] Output = new double[customerList.Count()][];
             int i = 0;
             foreach(Customer customer in customerList)
             {
-                
                 NormalizedCustomer nc = new NormalizedCustomer(customer);
                 Output[i] = new double[] {nc.DestinationPrag, nc.DestinationBudapest, nc.DestinationBerlin, nc.DestinationStockholm, nc.DestinationOslo, nc.DestinationLondon,
                         nc.DestinationNewYork, nc.DestinationGreenland, nc.DestinationBoraBora, nc.DestinationDubai};
@@ -184,7 +169,6 @@ namespace TravelAI
             int i = 0;
             foreach(Customer customer in customerList)
             {
-                
                 NormalizedCustomer nc = new NormalizedCustomer(customer);
                 Input[i] = new double[] { nc.Age, nc.AnnualIncome, nc.WorkStatusStudent, nc.WorkStatusEmployed, nc.WorkStatusUnemployed, nc.WorkStatusRetired };
                 i++;

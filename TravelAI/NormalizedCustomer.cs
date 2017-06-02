@@ -110,7 +110,8 @@ namespace TravelAI
         }
         private double NormalizeAge(int age) // 16-80 --> 0.0-1.0
         {
-            return NormalizeValue(16, 80, age);
+            double normalizeAge = NormalizeValue(16, 80, age);
+            return normalizeAge;
         }
 
         private double NormalizeAnnualIncome(int annualIncome) // 0-500000 --> 0.0-1.0
@@ -120,7 +121,9 @@ namespace TravelAI
 
         private double NormalizeValue(int lowestValue, int highestValue, int value)
         {
-            return (value - lowestValue) / (highestValue - lowestValue);
+
+            double normalizedValue = (Convert.ToDouble(value) - Convert.ToDouble(lowestValue)) / (Convert.ToDouble(highestValue) - Convert.ToDouble(lowestValue)); ;
+            return normalizedValue;
         }
     }
 }
