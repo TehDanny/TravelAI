@@ -9,7 +9,6 @@ namespace TravelAI
 {
     class Program
     {
-        
         static void Main(string[] args)
         {
             Program p = new Program();
@@ -120,7 +119,6 @@ namespace TravelAI
                         actualResults[i][j] = 0.9;
                     else
                         actualResults[i][j] = 0.1;
-
                 }
                 if (expectedResults[i].SequenceEqual(actualResults[i]))
                     countRight++;
@@ -175,6 +173,22 @@ namespace TravelAI
             }
             return Input;
         }
-        
+
+        private void ManualTestOfNetwork()
+        {
+            int age;
+            int annualIncome;
+            int workStatus;
+            int destination;
+            Console.Write("Age: ");
+            age = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Annual income: ");
+            annualIncome = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Work status (1: Student, 2: Employed, 3: Unemployed, 4: Retired): ");
+            workStatus = Convert.ToInt32(Console.ReadLine());
+            Console.Write("1: Prag, 2: Budapest, 3: Berlin, 4: Stockholm, 5: Oslo, 6: London, 7: New York, 8: Grønland, 9: Bora Bora, 10: Dubai\n");
+            destination = Convert.ToInt32(Console.ReadLine());
+            Customer customer = new Customer(age, annualIncome, workStatus, destination);
+        }
     }
 }
