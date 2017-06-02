@@ -74,7 +74,7 @@ namespace TravelAI
                     }
                     Console.WriteLine(iterations.ToString());
                 }
-                while (TestResults(actualTestDataResults, numberOfOutputNodes)); //mens outputtene er over/under en hvis værdi
+                while (keepTesting(actualTestDataResults, numberOfOutputNodes)); //mens outputtene er over/under en hvis værdi
                 double[] accuracyResults = GetAccuracy(testDataOutputArray, actualTestDataResults, numberOfOutputNodes);
                 Console.WriteLine("Right Results: " + accuracyResults[0] + " Wrong Results " + accuracyResults[1]);
                 Console.WriteLine(iterations.ToString() + " iterations required for training");
@@ -83,7 +83,7 @@ namespace TravelAI
             
         }
         
-        bool TestResults(double[][] actualTestDataResults, int numberOfOutputNodes)
+        bool keepTesting(double[][] actualTestDataResults, int numberOfOutputNodes)
         {
             int correctResults = 0;
             int wrongResults = 0;
@@ -115,7 +115,7 @@ namespace TravelAI
             int countRight = 0;
             int countWrong = 0;
             int rowCount = expectedResults.Count();
-            int outputCount = expectedResults[1].Count();
+            int outputNodeCount = expectedResults[1].Count();
             for (int i = 0; i < rowCount ; i++)
             {
                 for (int j = 0; j < numberOfOutputNodes; j++)
