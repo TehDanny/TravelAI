@@ -36,19 +36,24 @@ namespace TravelAI
         }
         void NormalizeWorkStatus(int workStatus)
         {
+            this.WorkStatusStudent = 0.1;
+            this.WorkStatusEmployed = 0.1;
+            this.WorkStatusUnemployed = 0.1;
+            this.WorkStatusRetired = 0.1;
+
             switch (workStatus)
             {
                 case 1:
-                    this.WorkStatusStudent = 1;
+                    this.WorkStatusStudent = 0.9;
                     break;
                 case 2:
-                    this.WorkStatusEmployed = 1;
+                    this.WorkStatusEmployed = 0.9;
                     break;
                 case 3:
-                    this.WorkStatusUnemployed = 1;
+                    this.WorkStatusUnemployed = 0.9;
                     break;
                 case 4:
-                    this.WorkStatusRetired = 1;
+                    this.WorkStatusRetired = 0.9;
                     break;
                 default:
                     throw new Exception();
@@ -56,37 +61,48 @@ namespace TravelAI
         }
         void NormalizeDestination(int destination)
         {
+            this.DestinationPrag = 0.1;
+            this.DestinationBudapest = 0.1;
+            this.DestinationBerlin = 0.1;
+            this.DestinationStockholm = 0.1;
+            this.DestinationOslo = 0.1;
+            this.DestinationLondon = 0.1;
+            this.DestinationNewYork = 0.1;
+            this.DestinationGreenland = 0.1;
+            this.DestinationBoraBora = 0.1;
+            this.DestinationDubai = 0.1;
+
             switch (destination)
             {
                 case 1:
-                    this.DestinationPrag = 1;
+                    this.DestinationPrag = 0.9;
                     break;
                 case 2:
-                    this.DestinationBudapest = 1;
+                    this.DestinationBudapest = 0.9;
                     break;
                 case 3:
-                    this.DestinationBerlin = 1;
+                    this.DestinationBerlin = 0.9;
                     break;
                 case 4:
-                    this.DestinationStockholm = 1;
+                    this.DestinationStockholm = 0.9;
                     break;
                 case 5:
-                    this.DestinationOslo = 1;
+                    this.DestinationOslo = 0.9;
                     break;
                 case 6:
-                    this.DestinationLondon = 1;
+                    this.DestinationLondon = 0.9;
                     break;
                 case 7:
-                    this.DestinationNewYork = 1;
+                    this.DestinationNewYork = 0.9;
                     break;
                 case 8:
-                    this.DestinationGreenland = 1;
+                    this.DestinationGreenland = 0.9;
                     break;
                 case 9:
-                    this.DestinationBoraBora = 1;
+                    this.DestinationBoraBora = 0.9;
                     break;
                 case 10:
-                    this.DestinationDubai = 1;
+                    this.DestinationDubai = 0.9;
                     break;
                 default:
                     throw new Exception();

@@ -14,7 +14,7 @@ namespace NeuralNetworkLibrary
         double m_learningRate;
         public NeuralNet()
         {
-            m_learningRate = 0.9;
+            m_learningRate = 1;
         }
         public INeuralLayer HiddenLayer
         {

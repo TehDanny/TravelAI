@@ -21,14 +21,14 @@ namespace TravelAI
             int randomSeed = 1;
             int numberOfInputs = 6;
             int numberOfOutputs = 10;
-            int numberOfHiddenNeurons = 12;
+            int numberOfHiddenNeurons = 20;
             double high = .9;
             double low = .1;
             double mid = .5;
             net.Initialize(randomSeed, numberOfInputs, numberOfHiddenNeurons, numberOfOutputs);
 
             CustomerData cd = new CustomerData();
-            List<Customer> customerList = cd.GetCustomers(100);
+            List<Customer> customerList = cd.GetCustomers(10000);
             List<Customer> trainCustomerList = GetCustomerLists(customerList)[0];
             List<Customer> testCustomerList = GetCustomerLists(customerList)[1];
 
@@ -49,10 +49,10 @@ namespace TravelAI
                 {
                     testOutputResults = new double[testInputCount];
                     iterations++;
-                    for (int i = 0; i < 20; i++)
-                    {
+                    //for (int i = 0; i < 10; i++)
+                    //{
                         net.Train(trainInput, trainOutput);
-                    }
+                    //}
 
                     // først træner netværket og så sætter den prædefinerede værdier igennem for at se om resultatet passer og hvis ikke gør den det igen
                     net.ApplyLearning();
@@ -61,7 +61,7 @@ namespace TravelAI
                     {
                         for(int j = 0; j < numberOfInputs; j++)
                         {
-                            net.PerceptionLayer[j].Output = testOutput[i][j];
+                            net.PerceptionLayer[j].Output = testInput[i][j];
                         }
                         net.Pulse();
                         testOutputResults[i] = net.OutputLayer[0].Output;
@@ -85,15 +85,15 @@ namespace TravelAI
         {
             for(int i = 0; i < testOutputResults.Count(); i++)
             {
-                
-                if (testOutputResults[i] > 0.5)
+                //Console.WriteLine(testOutputResults[i].ToString());
+                if (testOutputResults[i] > 0.25)
                 {
                     
                     return false;
                 }
                     
             }
-            Console.WriteLine(testOutputResults[testOutputResults.Count()-2].ToString());
+            
             return true;
         }
         List<List<Customer>> GetCustomerLists(List<Customer> customerList)

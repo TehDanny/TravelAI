@@ -16,9 +16,9 @@ namespace DataPopulator
         }
         void Run()
         {
-            List<Person> customerList = GeneratePeopleData(10000);
+            List<Person> customerList = GeneratePeopleData(50000);
             //insertIntoDb(customerList);
-            printList(customerList);
+            //printList(customerList);
         }
         List<Person> GeneratePeopleData(int numberOfRows)
         {
@@ -51,7 +51,7 @@ namespace DataPopulator
                 var ps = session.Prepare("insert into  \"People\" (id, \"Age\", \"AnnualIncome\", \"Destination\", \"WorkStatus\") values (uuid(), ?, ?, ?, ?)");
                 var statement = ps.Bind(person.Age, person.AnnualIncome, person.Destination, person.WorkStatus);
                 
-                //session.Execute(statement);
+                session.Execute(statement);
             }
             Console.WriteLine("Done inserting!");
             Console.ReadKey(true);
