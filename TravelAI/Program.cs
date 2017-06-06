@@ -189,6 +189,13 @@ namespace TravelAI
             Console.Write("1: Prag, 2: Budapest, 3: Berlin, 4: Stockholm, 5: Oslo, 6: London, 7: New York, 8: Grønland, 9: Bora Bora, 10: Dubai\n");
             destination = Convert.ToInt32(Console.ReadLine());
             Customer customer = new Customer(age, annualIncome, workStatus, destination);
+            NormalizedCustomer nc = new NormalizedCustomer(customer);
+
+            // convert normalized customer to input and output arrays
+
+            // get accuracy
+
+            //Console.WriteLine("Expected result: {0}, Actual result: {1}", x, y);
         }
     }
 }
