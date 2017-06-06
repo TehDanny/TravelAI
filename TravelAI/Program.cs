@@ -75,6 +75,8 @@ namespace TravelAI
                 Console.WriteLine("Right Results: " + accuracyResults[0] + " Wrong Results " + accuracyResults[1] + " Accuracy: " + accuracyPercentage + "%");
                 Console.WriteLine(iterations.ToString() + " iterations required for training");
             }
+            
+            ManualTestOfNetwork(net, numberOfInputNodes, numberOfOutputNodes);
             Console.ReadKey(true);
         }
         
@@ -174,28 +176,66 @@ namespace TravelAI
             return Input;
         }
 
-        private void ManualTestOfNetwork()
+        private void ManualTestOfNetwork(INeuralNet net, int numberOfInputNodes, int numberOfOutputNodes)
         {
-            int age;
-            int annualIncome;
-            int workStatus;
-            int destination;
-            Console.Write("Age: ");
-            age = Convert.ToInt32(Console.ReadLine());
-            Console.Write("Annual income: ");
-            annualIncome = Convert.ToInt32(Console.ReadLine());
-            Console.Write("Work status (1: Student, 2: Employed, 3: Unemployed, 4: Retired): ");
-            workStatus = Convert.ToInt32(Console.ReadLine());
-            Console.Write("1: Prag, 2: Budapest, 3: Berlin, 4: Stockholm, 5: Oslo, 6: London, 7: New York, 8: Grønland, 9: Bora Bora, 10: Dubai\n");
-            destination = Convert.ToInt32(Console.ReadLine());
-            Customer customer = new Customer(age, annualIncome, workStatus, destination);
-            NormalizedCustomer nc = new NormalizedCustomer(customer);
+            while (true)
+            {
+                // Asking user for input
+                int age, annualIncome, workStatus, destination;
+                Console.WriteLine("\nManual test");
+                Console.Write("Age: ");
+                age = Convert.ToInt32(Console.ReadLine());
+                Console.Write("Annual income: ");
+                annualIncome = Convert.ToInt32(Console.ReadLine());
+                Console.Write("1: Student, 2: Employed, 3: Unemployed, 4: Retired\n" +
+                    "Work status: ");
+                workStatus = Convert.ToInt32(Console.ReadLine());
+                Console.Write("1: Prag, 2: Budapest, 3: Berlin, 4: Stockholm, 5: Oslo, 6: London, 7: New York, 8: Grønland, 9: Bora Bora, 10: Dubai\n" +
+                    "Destination:");
+                destination = Convert.ToInt32(Console.ReadLine());
+                Customer customer = new Customer(age, annualIncome, workStatus, destination);
+                NormalizedCustomer nc = new NormalizedCustomer(customer);
 
-            // convert normalized customer to input and output arrays
+                // Converting normalized customer to input and output arrays
+                double[][] userInput = new double[1][];
+                userInput[0] = new double[] { nc.Age, nc.AnnualIncome, nc.WorkStatusStudent, nc.WorkStatusEmployed, nc.WorkStatusUnemployed, nc.WorkStatusRetired };
 
-            // get accuracy
+                double[][] userOutput = new double[1][];
+                userOutput[0] = new double[] {nc.DestinationPrag, nc.DestinationBudapest, nc.DestinationBerlin, nc.DestinationStockholm, nc.DestinationOslo, nc.DestinationLondon,
+                        nc.DestinationNewYork, nc.DestinationGreenland, nc.DestinationBoraBora, nc.DestinationDubai};
 
-            //Console.WriteLine("Expected result: {0}, Actual result: {1}", x, y);
+                // Testing the input customer
+                for (int j = 0; j < numberOfInputNodes; j++)
+                {
+                    net.PerceptionLayer[j].Output = userInput[0][j];
+                }
+
+                net.Pulse();
+
+                double[][] actualTestDataResults = new double[1][];
+                actualTestDataResults[0] = new double[numberOfOutputNodes];
+                for (int i = 0; i < numberOfOutputNodes; i++)
+                {
+                    actualTestDataResults[0][i] = net.OutputLayer[i].Output;
+                }
+
+                // Checking accuracy of the test
+                int actualResult = 0;
+                for (int i = 0; i < numberOfOutputNodes; i++)
+                {
+                    if (actualTestDataResults[0][i] > 0.5)
+                        actualResult = i;
+                }
+
+                // Conclusion
+                Console.WriteLine("Expected result: {0}, Actual result: {1}", destination, actualResult);
+                if (destination == actualResult)
+                    Console.WriteLine("The neural network reached the expected result.");
+                else
+                    Console.WriteLine("The neural network did not reach the expected result.");
+                Console.WriteLine("Press any key to manually test again...");
+                Console.ReadKey();
+            }
         }
     }
 }
