@@ -231,6 +231,8 @@ namespace TravelAI
                 Console.WriteLine("Expected result: {0}, Actual result: {1}", destination, actualResult);
                 if (destination == actualResult)
                     Console.WriteLine("The neural network reached the expected result.");
+                else if(actualResult == 0)
+                    Console.WriteLine("The neural network couldn't find a destination.");
                 else
                     Console.WriteLine("The neural network did not reach the expected result.");
                 Console.WriteLine("Press any key to manually test again...");
