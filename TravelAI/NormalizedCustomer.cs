@@ -36,24 +36,26 @@ namespace TravelAI
         }
         void NormalizeWorkStatus(int workStatus)
         {
-            this.WorkStatusStudent = 0.1;
-            this.WorkStatusEmployed = 0.1;
-            this.WorkStatusUnemployed = 0.1;
-            this.WorkStatusRetired = 0.1;
+            double low = 0;
+            double high = 1;
+            this.WorkStatusStudent = low;
+            this.WorkStatusEmployed = low;
+            this.WorkStatusUnemployed = low;
+            this.WorkStatusRetired = low;
 
             switch (workStatus)
             {
                 case 1:
-                    this.WorkStatusStudent = 0.9;
+                    this.WorkStatusStudent = high;
                     break;
                 case 2:
-                    this.WorkStatusEmployed = 0.9;
+                    this.WorkStatusEmployed = high;
                     break;
                 case 3:
-                    this.WorkStatusUnemployed = 0.9;
+                    this.WorkStatusUnemployed = high;
                     break;
                 case 4:
-                    this.WorkStatusRetired = 0.9;
+                    this.WorkStatusRetired = high;
                     break;
                 default:
                     throw new Exception();
@@ -61,48 +63,50 @@ namespace TravelAI
         }
         void NormalizeDestination(int destination)
         {
-            this.DestinationPrag = 0.1;
-            this.DestinationBudapest = 0.1;
-            this.DestinationBerlin = 0.1;
-            this.DestinationStockholm = 0.1;
-            this.DestinationOslo = 0.1;
-            this.DestinationLondon = 0.1;
-            this.DestinationNewYork = 0.1;
-            this.DestinationGreenland = 0.1;
-            this.DestinationBoraBora = 0.1;
-            this.DestinationDubai = 0.1;
+            double low = 0;
+            double high = 1;
+            this.DestinationPrag = low;
+            this.DestinationBudapest = low;
+            this.DestinationBerlin = low;
+            this.DestinationStockholm = low;
+            this.DestinationOslo = low;
+            this.DestinationLondon = low;
+            this.DestinationNewYork = low;
+            this.DestinationGreenland = low;
+            this.DestinationBoraBora = low;
+            this.DestinationDubai = low;
 
             switch (destination)
             {
                 case 1:
-                    this.DestinationPrag = 0.9;
+                    this.DestinationPrag = high;
                     break;
                 case 2:
-                    this.DestinationBudapest = 0.9;
+                    this.DestinationBudapest = high;
                     break;
                 case 3:
-                    this.DestinationBerlin = 0.9;
+                    this.DestinationBerlin = high;
                     break;
                 case 4:
-                    this.DestinationStockholm = 0.9;
+                    this.DestinationStockholm = high;
                     break;
                 case 5:
-                    this.DestinationOslo = 0.9;
+                    this.DestinationOslo = high;
                     break;
                 case 6:
-                    this.DestinationLondon = 0.9;
+                    this.DestinationLondon = high;
                     break;
                 case 7:
-                    this.DestinationNewYork = 0.9;
+                    this.DestinationNewYork = high;
                     break;
                 case 8:
-                    this.DestinationGreenland = 0.9;
+                    this.DestinationGreenland = high;
                     break;
                 case 9:
-                    this.DestinationBoraBora = 0.9;
+                    this.DestinationBoraBora = high;
                     break;
                 case 10:
-                    this.DestinationDubai = 0.9;
+                    this.DestinationDubai = high;
                     break;
                 default:
                     throw new Exception();

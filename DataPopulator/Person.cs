@@ -11,7 +11,7 @@ namespace DataPopulator
         static Random rand = new Random();
         public int Age { get; set; }
         public int AnnualIncome { get; set; } // in thousands
-        public int WorkStatus { get; set; } // 1= Student, 2 = Employed, 3=unemployed, 4= Retired
+        public int WorkStatus { get; set; } // 1= Student, 2 = Employed, 3=Unemployed, 4= Retired
         //public int Sex { get; set; } // 1= male, 2= female
         public int Destination { get; set; } // 1 = cheapest and youngest, 10 oldest and most expensive
         // Prag, Budapest, Berlin,Stockholm ,Oslo , London, New York, Grønland, Bora Bora , Dubai,
