@@ -82,11 +82,17 @@ namespace NeuralNetworkLibrary
                 m_output += m_bias.Weight * BiasWeight;
 
                 m_output = Sigmoid(m_output);
+                //m_output = Logistic(m_output);
             }
         }
         private static double Sigmoid(double value)
         {
-            return 1 / (1 + Math.Exp(-value));
+            double sigmoid = 1 / (1 + Math.Exp(-value));
+            return sigmoid;
+        }
+        double Logistic(double x)
+        {
+            return 1 / (1 + Math.Pow(Math.E, -x));
         }
 
 

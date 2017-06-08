@@ -25,7 +25,8 @@ namespace TravelAI
         public double DestinationGreenland { get; set; }
         public double DestinationBoraBora { get; set; }
         public double DestinationDubai { get; set; }
-
+        double low = 0;
+        double high = 1;
         public NormalizedCustomer(Customer customer)
         {
             Age = NormalizeAge(customer.Age);
@@ -36,8 +37,7 @@ namespace TravelAI
         }
         void NormalizeWorkStatus(int workStatus)
         {
-            double low = 0;
-            double high = 1;
+            
             this.WorkStatusStudent = low;
             this.WorkStatusEmployed = low;
             this.WorkStatusUnemployed = low;
@@ -63,8 +63,7 @@ namespace TravelAI
         }
         void NormalizeDestination(int destination)
         {
-            double low = 0;
-            double high = 1;
+            
             this.DestinationPrag = low;
             this.DestinationBudapest = low;
             this.DestinationBerlin = low;
