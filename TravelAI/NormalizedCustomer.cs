@@ -124,8 +124,7 @@ namespace TravelAI
 
         private double NormalizeValue(int lowestValue, int highestValue, int value)
         {
-
-            double normalizedValue = (Convert.ToDouble(value) - Convert.ToDouble(lowestValue)) / (Convert.ToDouble(highestValue) - Convert.ToDouble(lowestValue)); ;
+            double normalizedValue = (Convert.ToDouble(value) - Convert.ToDouble(lowestValue)) / (Convert.ToDouble(highestValue) - Convert.ToDouble(lowestValue));
             return normalizedValue;
         }
     }
