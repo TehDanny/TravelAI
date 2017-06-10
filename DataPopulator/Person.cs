@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataPopulator
 {
-    class Person
+    public class Person
     {
         static Random rand = new Random();
         public int Age { get; set; }

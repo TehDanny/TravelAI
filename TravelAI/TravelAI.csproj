@@ -73,6 +73,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataPopulator\DataPopulator.csproj">
+      <Project>{36c4a674-eecd-43ab-a441-a45d938a72fd}</Project>
+      <Name>DataPopulator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NeuralNetworkLibrary\NeuralNetworkLibrary.csproj">
       <Project>{062401e2-a888-430c-8062-242b89474ad2}</Project>
       <Name>NeuralNetworkLibrary</Name>
