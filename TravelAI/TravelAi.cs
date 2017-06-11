@@ -22,24 +22,20 @@ namespace TravelAI
         int numberOfHiddenNeurons = 12;
         double errorMargin;
         Stopwatch stopWatch;
+        
         public TravelAi()
         {
             net = new NeuralNet();
-
-            
             errorMargin = 0.5;
             customerList = cd.GetCustomers(20000);
             List<List<Customer>> customerDataLists = GetCustomerLists(customerList);
             trainCustomerList = customerDataLists[0];
             testCustomerList = customerDataLists[1];
             net.Initialize(randomSeed, numberOfInputNodes, numberOfHiddenNeurons, numberOfOutputNodes);
-            
             Run();
         }
         void Run()
         {
-
-
             int customerCount = customerList.Count();
             if (customerList != null && customerList.Count >= 1)
             {
@@ -47,31 +43,22 @@ namespace TravelAI
                 double[][] trainDataOutputArray = GetOutputArray(trainCustomerList);
                 double[][] testDataInputArray = GetInputArray(testCustomerList);
                 double[][] testDataOutputArray = GetOutputArray(testCustomerList);
-
                 int iterations = 0;
-                int index = 1; // skal ændres til  0 senere
                 int testDataInputCount = testDataInputArray.Count();
-                int testDataOutputCount = testDataOutputArray.Count();
                 double[][] actualTestedDataResults;
                 double[][] desiredTestDataResults = new double[testDataInputCount][];
-                double[] desiredResult;
-                double accuracy;
-                double lastAccuracy = 0;
-                double errorSum;
+                double deltaErrorSum;
                 stopWatch = new Stopwatch();
+                Console.WriteLine("Started Training:");
                 do
                 {
-                    
                     actualTestedDataResults = new double[testDataInputCount][];
-                    desiredResult = new double[numberOfOutputNodes];
                     iterations++;
-                    desiredResult = trainDataOutputArray[index];
                     stopWatch.Start();
-                    //net.Train(trainDataInputArray[index], desiredResult);
                     net.Train(trainDataInputArray, trainDataOutputArray);
-                    // først træner netværket og så tester den de prædefinerede værdier igennem for at se om resultatet passer og hvis ikke gør den det igen
+                    
                     net.ApplyLearning();
-                    errorSum = 0;
+                    deltaErrorSum = 0;
                     for (int i = 0; i < testDataInputCount; i++)
                     {
                         for (int j = 0; j < numberOfInputNodes; j++)
@@ -83,31 +70,12 @@ namespace TravelAI
                         for (int k = 0; k < numberOfOutputNodes; k++)
                         {
                             actualTestedDataResults[i][k] = net.OutputLayer[k].Output;
-                            errorSum += net.OutputLayer[k].Error;
-                            //Console.Write(net.OutputLayer[k].Error.ToString(" 0.####")); 
+                            deltaErrorSum += net.OutputLayer[k].DeltaError; 
                         }
-                        
                     }
-                    //Console.WriteLine(errorSum.ToString());
-                    ////Console.WriteLine(iterations.ToString());
-                    //accuracy = GetAccuracy(testDataOutputArray, actualTestedDataResults);
-                    //if (accuracy > lastAccuracy)
-                    //{
-                    //    Console.WriteLine(accuracy.ToString());
-                    //    lastAccuracy = accuracy;
-                    //}
-                        
-                    //if (accuracy > (1 - errorMargin) && accuracy> lastAccuracy)
-                    //{
-                    //   
-                    //    Console.WriteLine("Index: " + index.ToString() + " Accuracy: " + accuracy + " Prev. Accuracy: " + lastAccuracy.ToString() );
-                    //    Console.WriteLine(iterations.ToString() + " iterations and time: " + elapsedTime + " required for training upto index: " + index);
-                    //    index++;
-                    //    lastAccuracy = accuracy;
-                    //}
                     
                 }
-                while ( errorSum > 0.0001 || errorSum < -0.0001);
+                while ( deltaErrorSum > 0.00001 || deltaErrorSum < -0.00001);
                 stopWatch.Stop();
                 TimeSpan ts = stopWatch.Elapsed;
                 string elapsedTime = String.Format("{0:00}m:{1:00}s:{2:00}ms",ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
@@ -149,35 +117,11 @@ namespace TravelAI
                 }
             }
 
-            double accuracySum = 0;
-            double tempAccuracy;
+            
             double accuracy = GetAccuracy(outputTestingDataList, actualData);
-            //accuracySum += tempAccuracy;
-           
-            //double accuracy = accuracySum / (double)numberOfCustomers;
+            
             return accuracy;
         }
-        bool keepTesting(double[][] actualTestDataResults,double[] expectedTestDataResult, int numberOfOutputNodes)
-        {
-            int correctResult = 0;
-            int incorrectResult = 0;
-            int testOutputResultsCount = actualTestDataResults.Count();
-            for(int i = 0; i < testOutputResultsCount; i++)
-            {
-               
-                if (actualTestDataResults[i].SequenceEqual(expectedTestDataResult)){
-                    correctResult++;
-                }
-                else
-                    incorrectResult++;
-            }
-            
-            if (correctResult > testOutputResultsCount * 0.9)
-                return false;
-            else
-                return true;
-        }
-        
         double GetAccuracy(double[][] desiredResult, double[][] actualResults)
         {
             double right = 0;
@@ -195,8 +139,6 @@ namespace TravelAI
                     if (actualResults[i][j] < low)
                         actualResults[i][j] = 0;
                 }
-                //Console.WriteLine("actual: " + ConvertArrayToString(actualResults[i]) + " desired: " + ConvertArrayToString(desiredResult));
-                
                 if (actualResults[i].SequenceEqual(desiredResult[i]))
                     right++;
                 else
@@ -307,7 +249,7 @@ namespace TravelAI
                 for (int i = 0; i < numberOfOutputNodes; i++)
                 {
                     if (actualTestDataResults[0][i] > 0.5)
-                        actualResult = i;
+                        actualResult = i+1;
                 }
 
                 // Conclusion

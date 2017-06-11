@@ -17,13 +17,10 @@ namespace DataPopulator
         // Prag, Budapest, Berlin,Stockholm ,Oslo , London, New York, Grønland, Bora Bora , Dubai,
         public Person()
         {
-            
-            
             this.Age = rand.Next(16, 81);
             //this.Sex = rand.Next(1, 3);
             if (this.Age >= 67)
             {
-
                 this.WorkStatus = 4;
                 this.AnnualIncome = rand.Next(150, 250) * 1000;
             }

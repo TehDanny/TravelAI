@@ -62,7 +62,6 @@
   <ItemGroup>
     <Compile Include="Customer.cs" />
     <Compile Include="CustomerData.cs" />
-    <Compile Include="DataNormalizer.cs" />
     <Compile Include="NormalizedCustomer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

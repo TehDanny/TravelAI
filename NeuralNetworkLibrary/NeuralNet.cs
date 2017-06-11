@@ -50,11 +50,8 @@ namespace NeuralNetworkLibrary
         }
         public void Initialize(int randomSeed, int inputNeuronCount, int hiddenNeuronCount, int outputNeuronCount)
         {
-            int i, j, k, layerCount;
+            int i, j;
             Random rand;
-            INeuralLayer layer;
-
-            // initializations
             rand = new Random(randomSeed);
             m_inputLayer = new NeuralLayer();
             m_outputLayer = new NeuralLayer();
@@ -86,7 +83,7 @@ namespace NeuralNetworkLibrary
             int i, j;
             double temp, error;
 
-            INeuron outputNode, inputNode, hiddenNode, node, node2;
+            INeuron outputNode, inputNode, hiddenNode, node;
 
             // Calcualte output error values
             for (i = 0; i < m_outputLayer.Count; i++)
@@ -150,7 +147,7 @@ namespace NeuralNetworkLibrary
             {
                 Neuron n = m_inputLayer[i] as Neuron;
 
-                if (null != n) // maybe make interface get;set;
+                if (null != n) 
                     n.Output = input[i];
             }
 

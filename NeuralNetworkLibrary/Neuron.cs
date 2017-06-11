@@ -47,6 +47,10 @@ namespace NeuralNetworkLibrary
                 m_error = value;
             }
         }
+        public double DeltaError
+        {
+            get { return m_lastError - m_error; }
+        }
 
         public Dictionary<INeuronSignal, NeuralFactor> Input
         {

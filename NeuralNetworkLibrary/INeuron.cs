@@ -14,5 +14,6 @@ namespace NeuralNetworkLibrary
         NeuralFactor Bias { get; set; }
         double BiasWeight { get; set; }
         double Error { get; set; }
+        double DeltaError { get; }
     }
 }

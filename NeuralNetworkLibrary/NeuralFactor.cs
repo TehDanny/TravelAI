@@ -22,8 +22,6 @@ namespace NeuralNetworkLibrary
 
         private double m_weight;
         private double m_delta;
-        private double m_lastDelta;
-
         #endregion
 
         #region Properties
@@ -49,11 +47,7 @@ namespace NeuralNetworkLibrary
             m_weight += m_delta;
             m_delta = 0;
         }
-        //public void ApplyWeightChange(ref double learningRate)
-        //{
-        //    m_lastDelta = m_delta;
-        //    m_weight += m_delta * learningRate;
-        //}
+       
         #endregion
     }
 }
