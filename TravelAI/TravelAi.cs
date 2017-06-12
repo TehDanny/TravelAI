@@ -9,7 +9,7 @@ using DataPopulator;
 
 namespace TravelAI
 {
-    class TravelAi
+    class TravelAI
     {
         NeuralNet net;
         CustomerData cd = new CustomerData();
@@ -23,7 +23,7 @@ namespace TravelAI
         double errorMargin;
         Stopwatch stopWatch;
         
-        public TravelAi()
+        public TravelAI()
         {
             net = new NeuralNet();
             errorMargin = 0.5;

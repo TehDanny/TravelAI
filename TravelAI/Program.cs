@@ -11,7 +11,7 @@ namespace TravelAI
     {
         static void Main(string[] args)
         {
-            TravelAi travelAi = new TravelAi();
+            TravelAI travelAi = new TravelAI();
         }
         
     }
